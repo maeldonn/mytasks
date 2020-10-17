@@ -1,16 +1,14 @@
 <template>
   <v-app>
     <Navbar />
-    <v-main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
-    </v-main>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue';
+import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'App',

@@ -1,5 +1,5 @@
 <template>
-  <h1>Resgister</h1>
+  <h1>Register</h1>
 </template>
 
 <script>
