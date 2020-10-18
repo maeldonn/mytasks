@@ -5,9 +5,6 @@
 <script>
 export default {
   name: 'Administration',
+  components: {},
 };
 </script>
-
-<style>
-
-</style>
