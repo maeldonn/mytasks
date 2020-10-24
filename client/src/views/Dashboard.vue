@@ -1,10 +1,23 @@
 <template>
-  <h1>Dashboard</h1>
+  <section class="dashboard">
+    <Title content="Dashboard"/>
+  </section>
 </template>
 
 <script>
+import Title from '@/components/Title.vue';
+
 export default {
   name: 'Dashboard',
-  components: {},
+  components: {
+    Title,
+  },
 };
 </script>
+
+<style scoped>
+  h1 {
+    text-align: center;
+    margin: 3rem auto;
+  }
+</style>

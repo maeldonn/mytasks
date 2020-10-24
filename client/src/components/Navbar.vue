@@ -9,25 +9,25 @@
       </router-link>
     </div>
     <ul class="nav-links" v-if="connected">
-      <li>
-        <router-link :to="{ name: 'Dashboard' }" @click="navSlide">Dashboard</router-link>
+      <li @click="closeMenu">
+        <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>
       </li>
-      <li v-if="isAdmin">
-        <router-link :to="{ name: 'Administration' }" @click="navSlide">Admin</router-link>
+      <li v-if="isAdmin" @click="closeMenu">
+        <router-link :to="{ name: 'Administration' }">Admin</router-link>
       </li>
-      <li>
-        <router-link :to="{ name: 'Home' }" @click="navSlide">Disconnect</router-link>
+      <li @click="closeMenu">
+        <router-link :to="{ name: 'Home' }">Disconnect</router-link>
       </li>
     </ul>
     <ul class="nav-links" v-else>
-      <li>
-        <router-link :to="{ name: 'Home' }" @click="navSlide">Home</router-link>
+      <li @click="closeMenu">
+        <router-link :to="{ name: 'Home' }">Home</router-link>
       </li>
-      <li>
-        <router-link :to="{ name: 'Login' }" @click="navSlide">Login</router-link>
+      <li @click="closeMenu">
+        <router-link :to="{ name: 'Login' }">Login</router-link>
       </li>
-      <li>
-        <router-link :to="{ name: 'Register' }" @click="navSlide">Register</router-link>
+      <li @click="closeMenu">
+        <router-link :to="{ name: 'Register' }">Register</router-link>
       </li>
     </ul>
     <div class="burger" @click="navSlide">
@@ -60,6 +60,9 @@ export default {
         }
       });
       document.querySelector('.burger').classList.toggle('toggle');
+    },
+    closeMenu() {
+      if (document.querySelector('.nav-active')) this.navSlide();
     },
   },
 };
@@ -102,7 +105,7 @@ a {
   text-decoration: none;
   letter-spacing: 3px;
   font-weight: bold;
-  transition: color 0.2s ease-in;
+  transition: all 0.1s ease-in;
 }
 
 a:hover {
@@ -135,6 +138,8 @@ a:hover {
     width: 100%;
     transform: translateX(100%);
     transition: transform 0.5s ease-in;
+    border: #dea90f 3px solid;
+    z-index: 100000;
   }
 
   li {
