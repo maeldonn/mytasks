@@ -21,9 +21,4 @@ export default {
   align-items: center;
   flex-direction: column;
 }
-
-h1 {
-  text-align: center;
-  margin: 3rem auto;
-}
 </style>

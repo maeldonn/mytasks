@@ -17,3 +17,8 @@
 * [ ] Add password complexity
 * [ ] Prevent brute force logins
   * [ ] Lock out account after too many login attempts
+
+# Client
+
+* [ ] HTTP cookie
+* [ ] Responsive 

@@ -1,24 +1,26 @@
 <template>
   <section class="register">
     <Title content="Register" />
-    <div>
-      <img v-if="isLoading" src="../assets/spinner.svg" class="spinner" />
+    <div class="spinner" v-if="isLoading">
+      <img src="../assets/spinner.svg" />
     </div>
-    <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+    <div class="error" :class="errorMessage ? 'active' : null">
+      <p v-if="errorMessage">{{ errorMessage }}</p>
+    </div>
     <form v-if="!isLoading" @submit.prevent="register">
-      <section class="section-register">
+      <section class="form-section">
         <input
           v-model="user.email"
-          type="email"
+          type="text"
           id="email"
           autocomplete="off"
           required
         />
-        <label for="email" class="label-email">
-          <span class="content-email">Email</span>
+        <label for="email" class="label">
+          <span class="content">Email</span>
         </label>
       </section>
-      <!-- <section class="section-register">
+      <section class="form-section">
         <input
           v-model="user.password"
           type="password"
@@ -26,11 +28,11 @@
           autocomplete="off"
           required
         />
-        <label for="password" class="label-password">
-          <span class="content-password">Password</span>
+        <label for="password" class="label">
+          <span class="content">Password</span>
         </label>
       </section>
-      <section class="section-register">
+      <section class="form-section">
         <input
           v-model="user.confirmPassword"
           type="password"
@@ -38,16 +40,30 @@
           autocomplete="off"
           required
         />
-        <label for="confirm-password" class="label-confirm-password">
-          <span class="content-confirm-password">Password confirmation</span>
+        <label for="confirm-password" class="label">
+          <span class="content">Password confirmation</span>
         </label>
-      </section> -->
+      </section>
+      <button type="submit">REGISTER</button>
     </form>
   </section>
 </template>
 
 <script>
+import Joi from 'joi';
+import axios from 'axios';
+
 import Title from '@/components/Title.vue';
+
+const REGISTER_URL = 'http://localhost:5000/auth/register';
+
+const userSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string().trim().min(8).required(),
+  confirmPassword: Joi.ref('password'),
+});
 
 export default {
   name: 'Register',
@@ -63,9 +79,61 @@ export default {
       confirmPassword: '',
     },
   }),
+  watch: {
+    user: {
+      handler() {
+        this.errorMessage = '';
+      },
+      deep: true,
+    },
+  },
   methods: {
     register() {
-      console.log('test');
+      if (this.validUser()) {
+        this.isLoading = true;
+        axios
+          .post(
+            REGISTER_URL,
+            {
+              email: this.user.email,
+              password: this.user.password,
+            },
+            {
+              headers: {
+                'content-type': 'application/json',
+              },
+            },
+          )
+          .then((result) => {
+            localStorage.token = result.data.token;
+            setTimeout(() => {
+              this.isLoading = false;
+              this.$router.push('/dashboard');
+            }, 1000);
+          })
+          .catch((error) => {
+            setTimeout(() => {
+              this.isLoading = false;
+              this.errorMessage = error.response.data.message;
+            }, 1000);
+          });
+      }
+    },
+    validUser() {
+      if (this.user.password !== this.user.confirmPassword) {
+        this.errorMessage = 'Passwords must match.';
+        return false;
+      }
+      const value = userSchema.validate(this.user);
+      if (!value?.error) {
+        return true;
+      }
+      if (value.error.message.includes('email')) {
+        this.errorMessage = 'Email address must be unique and valid.';
+      } else {
+        this.errorMessage = 'Your password must contain a minimum of 8 characters.';
+      }
+      return false;
     },
   },
 };
@@ -73,24 +141,53 @@ export default {
 
 <style scoped>
 .register {
+  height: 85%;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-h1 {
-  text-align: center;
-  margin: 3rem auto;
+.spinner {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.section-register {
+.error {
+  max-width: 70%;
+  height: 60px;
+  margin: 0rem 2rem;
+  padding: 1rem 2rem;
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  background: #b33a3a;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin: 3em;
+}
+
+.form-section {
   position: relative;
   height: 50px;
   overflow: hidden;
   margin: 2em auto;
 }
 
-.section-register input {
+.form-section input {
   width: 100%;
   height: 100%;
   font-size: 20px;
@@ -100,7 +197,7 @@ h1 {
   background: none;
 }
 
-.section-register label {
+.form-section label {
   position: absolute;
   bottom: 0px;
   left: 0%;
@@ -110,7 +207,7 @@ h1 {
   border-bottom: 1px solid black;
 }
 
-.section-register label::after {
+.form-section label::after {
   content: "";
   position: absolute;
   left: 0px;
@@ -122,22 +219,39 @@ h1 {
   transition: transform 0.3s ease;
 }
 
-.content-email {
+.content {
   position: absolute;
   bottom: 5px;
   left: 0px;
   transition: all 0.3s ease;
 }
 
-.section-register input:focus + .label-email .content-email,
-.section-register input:valid + .label-email .content-email {
+.form-section input:focus + .label .content,
+.form-section input:valid + .label .content {
   transform: translateY(-150%);
   font-size: 14px;
   color: #dea90f;
 }
 
-.section-register input:focus + .label-email::after,
-.section-register input:valid + .label-email::after {
+.form-section input:focus + .label::after,
+.form-section input:valid + .label::after {
   transform: translateX(0%);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  color: #ffffff;
+  border-radius: 80px;
+  background: #293156;
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  transition: color 0.5s ease-in-out;
+  margin: 3em;
+}
+
+button:hover {
+  background: #ffffff;
+  color: #dea90f;
 }
 </style>

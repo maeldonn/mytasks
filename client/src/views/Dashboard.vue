@@ -16,8 +16,10 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-    text-align: center;
-    margin: 3rem auto;
-  }
+.dashboard {
+  height: 85%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 </style>

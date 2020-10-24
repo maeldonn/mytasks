@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar :connected="connected" :isAdmin="isAdmin"/>
+    <Navbar :connected="connected" :isAdmin="isAdmin" />
     <router-view />
     <Footer />
   </div>
@@ -38,6 +38,6 @@ body {
 
 #app {
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 </style>
