@@ -1,9 +1,11 @@
 <template>
   <section class="dashboard">
     <Title content="Dashboard" />
-    <h1 v-if="!user">Getting user information...</h1>
-    <h1 v-else>Logged in as {{ user.email }} 🔐</h1>
-    <form @submit.prevent="addTodo">
+    <div class="spinner" v-if="isLoading">
+      <img src="../assets/spinner.svg" />
+    </div>
+    <h1 v-if="!isLoading">Logged in as {{ user.email }} 🔐</h1>
+    <form @submit.prevent="addTodo" v-if="!isLoading">
       <section class="form-section">
         <input
           v-model="newTodo"
@@ -18,7 +20,7 @@
       </section>
       <button type="submit">ADD</button>
     </form>
-    <ul id="scroll-list">
+    <ul id="scroll-list" v-if="!isLoading">
       <li v-for="todo in todos" :key="todo._id" @click="deleteTodo(todo._id)">
         {{ todo.title }}
       </li>
@@ -39,6 +41,7 @@ export default {
     Title,
   },
   data: () => ({
+    isLoading: true,
     user: null,
     todos: [],
     newTodo: '',
@@ -51,6 +54,9 @@ export default {
       .then((result) => {
         this.user = result.data.user;
         this.getTodos();
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 200);
       })
       .catch(() => {
         localStorage.removeItem('token');
@@ -110,6 +116,14 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.spinner {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 form {
