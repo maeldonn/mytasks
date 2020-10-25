@@ -10,6 +10,10 @@
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 
+import axios from 'axios';
+
+const API_URL = 'http://localhost:5000/';
+
 export default {
   name: 'App',
   components: {
@@ -27,15 +31,28 @@ export default {
       },
     },
   },
+  mounted() {
+    this.connected = this.isConnected();
+  },
   methods: {
     isConnected() {
-      const route = this.$route.path;
-      // TODO: isAdmin
-      if (route === '/dashboard' || route === '/administration') {
-        this.connected = true;
-      } else {
-        this.connected = false;
-      }
+      axios
+        .get(API_URL, {
+          headers: { Authorization: `Bearer ${localStorage.token}` },
+        })
+        .then((result) => {
+          if (result.data.user.role === 'admin') {
+            this.isAdmin = true;
+          } else {
+            this.isAdmin = false;
+          }
+          this.connected = true;
+        })
+        .catch(() => {
+          this.connected = false;
+          this.isAdmin = false;
+          localStorage.removeItem('token');
+        });
     },
   },
 };

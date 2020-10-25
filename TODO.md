@@ -31,5 +31,4 @@
 * [ ] Joi for notes
 * [ ] Token expired case
 * [ ] isLoading on todo add
-* [ ] Bug navbar
 * [ ] Focus last element todos
