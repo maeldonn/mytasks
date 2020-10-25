@@ -20,6 +20,24 @@ export default {
     connected: false,
     isAdmin: false,
   }),
+  watch: {
+    $route: {
+      handler() {
+        this.isConnected();
+      },
+    },
+  },
+  methods: {
+    isConnected() {
+      const route = this.$route.path;
+      // TODO: isAdmin
+      if (route === '/dashboard' || route === '/administration') {
+        this.connected = true;
+      } else {
+        this.connected = false;
+      }
+    },
+  },
 };
 </script>
 

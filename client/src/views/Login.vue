@@ -77,7 +77,6 @@ export default {
   methods: {
     login() {
       if (this.validUser()) {
-        this.errorMessage = '';
         this.isLoading = true;
         axios
           .post(
@@ -101,8 +100,7 @@ export default {
           })
           .catch(() => {
             setTimeout(() => {
-              this.isLoading = false;
-              this.errorMessage = 'Connexion impossible.';
+              this.impossibleToConnect();
             }, 1000);
           });
       }
@@ -115,10 +113,15 @@ export default {
       }
       this.isLoading = true;
       setTimeout(() => {
-        this.errorMessage = 'Connexion impossible..';
-        this.isLoading = false;
+        this.impossibleToConnect();
       }, 1000);
       return false;
+    },
+    impossibleToConnect() {
+      document.getElementById('email').focus();
+      this.user.password = '';
+      this.isLoading = false;
+      this.errorMessage = 'Connexion impossible.'; // BUG: Ne s'affiche jamais
     },
   },
 };

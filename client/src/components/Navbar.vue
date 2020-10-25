@@ -15,8 +15,8 @@
       <li v-if="isAdmin" @click="closeMenu">
         <router-link :to="{ name: 'Administration' }">Admin</router-link>
       </li>
-      <li @click="closeMenu">
-        <router-link :to="{ name: 'Home' }">Disconnect</router-link>
+      <li @click="logout">
+        <a>Disconnect</a>
       </li>
     </ul>
     <ul class="nav-links" v-else>
@@ -64,6 +64,11 @@ export default {
     closeMenu() {
       if (document.querySelector('.nav-active')) this.navSlide();
     },
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.push('/home');
+      this.closeMenu();
+    },
   },
 };
 </script>
@@ -106,6 +111,8 @@ a {
   letter-spacing: 3px;
   font-weight: bold;
   transition: all 0.1s ease-in;
+  outline: none;
+  cursor: pointer;
 }
 
 a:hover {

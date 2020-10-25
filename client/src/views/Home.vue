@@ -68,6 +68,10 @@ h3 {
   justify-content: center;
 }
 
+a {
+  outline: none;
+}
+
 button {
   width: 180px;
   cursor: pointer;
