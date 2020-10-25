@@ -118,10 +118,12 @@ export default {
       return false;
     },
     impossibleToConnect() {
-      document.getElementById('email').focus();
       this.user.password = '';
+      setTimeout(() => {
+        this.errorMessage = 'Connexion impossible.';
+      }, 10);
       this.isLoading = false;
-      this.errorMessage = 'Connexion impossible.'; // BUG: Ne s'affiche jamais
+      document.getElementById('email').focus(); // BUG: getElementById is null
     },
   },
 };

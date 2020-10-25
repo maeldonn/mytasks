@@ -17,8 +17,19 @@
 * [ ] Add password complexity
 * [ ] Prevent brute force logins
   * [ ] Lock out account after too many login attempts
+* [ ] Modify request (delete send the new todo list)
 
 # Client
 
-* [ ] HTTP cookie
+* [ ] HTTPonly cookie
 * [ ] Responsive 
+* [ ] env file for api adresses
+* [ ] Admin page + on navbar
+* [ ] Bug Register et Login
+* [ ] Component Register or Login
+* [ ] Login again at every action
+* [ ] Joi for notes
+* [ ] Token expired case
+* [ ] isLoading on todo add
+* [ ] Bug navbar
+* [ ] Focus last element todos

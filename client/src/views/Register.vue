@@ -114,16 +114,15 @@ export default {
           .catch((error) => {
             setTimeout(() => {
               this.isLoading = false;
-              this.resetPasswords();
-              this.errorMessage = error.response.data.message;
+              this.resetPasswords(error.response.data.message); // BUG: getElementById is null
             }, 1000);
           });
       }
     },
     validUser() {
+      this.errorMessage = '';
       if (this.user.password !== this.user.confirmPassword) {
-        this.errorMessage = 'Passwords must match.'; // BUG: Ne s'affiche jamais
-        this.resetPasswords();
+        this.resetPasswords('Passwords must match.');
         return false;
       }
       const value = userSchema.validate(this.user);
@@ -131,20 +130,19 @@ export default {
         return true;
       }
       if (value.error.message.includes('email')) {
-        this.errorMessage = 'Email address must be unique and valid.'; // BUG: Ne s'affiche jamais
+        this.resetPasswords('Email address must be unique and valid.');
       } else {
-        this.errorMessage = 'Your password must contain a minimum of 8 characters.'; // BUG: Ne s'affiche jamais
+        this.resetPasswords('Your password must contain a minimum of 8 characters.');
       }
-      this.resetPasswords();
       return false;
     },
-    resetPasswords() {
+    resetPasswords(errorMessage) {
+      this.user.password = '';
+      this.user.confirmPassword = '';
+      setTimeout(() => {
+        this.errorMessage = errorMessage;
+      }, 10);
       document.getElementById('email').focus();
-      this.user = {
-        email: this.user.email,
-        password: '',
-        confirmPassword: '',
-      };
     },
   },
 };
