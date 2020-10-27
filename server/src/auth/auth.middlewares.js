@@ -1,3 +1,6 @@
+const rateLimit = require('express-rate-limit');
+const slowDown = require('express-slow-down');
+
 const userSchema = require('./auth.schema');
 const users = require('./auth.model');
 
@@ -25,7 +28,20 @@ const findUser = (ErrorMessage, isValid, errorCode = 422) => async (req, res, ne
   }
 };
 
+const rateLimiter = (windowMs, max) => rateLimit({
+  windowMs: windowMs * 60 * 1000,
+  max,
+});
+
+const speedLimiter = (windowMs, delayAfter, delayMs) => slowDown({
+  windowMs: 60 * 1000,
+  delayAfter,
+  delayMs: delayMs * 1000,
+});
+
 module.exports = {
   validateUser,
   findUser,
+  rateLimiter,
+  speedLimiter,
 };

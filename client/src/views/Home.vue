@@ -12,8 +12,12 @@
       </div>
       <hr />
       <div class="buttons">
-        <router-link :to="{ name: 'Register' }"><button>REGISTER</button></router-link>
-        <router-link :to="{ name: 'Login' }"><button>LOGIN</button></router-link>
+        <router-link :to="{ name: 'Register' }"
+          ><button>REGISTER</button></router-link
+        >
+        <router-link :to="{ name: 'Login' }"
+          ><button>LOGIN</button></router-link
+        >
       </div>
     </div>
   </section>
