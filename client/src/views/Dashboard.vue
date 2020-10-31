@@ -102,8 +102,8 @@ export default {
             Authorization: `Bearer ${localStorage.token}`,
           },
         })
-        .then(() => {
-          this.getTodos();
+        .then((result) => {
+          this.todos = result.data;
         });
     },
   },

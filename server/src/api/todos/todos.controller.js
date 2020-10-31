@@ -35,7 +35,7 @@ const createTodo = (req, res, next) => {
 
 const deleteTodo = (req, res) => {
   todos.findOneAndDelete({ _id: req.params.id }).then((result) => {
-    res.json(result);
+    getList(req, res);
   });
 };
 
