@@ -21,7 +21,7 @@
     <ul id="scroll-list" v-if="!isLoading">
       <li v-for="user in filteredUsers" :key="user._id" @click="desactivateUser(user)">
         <p :class="!user.active ? 'unactive' : null">{{ user.email }}</p>
-        <p class="unactive" v-if="!user.active">(Desativated)</p>
+        <p class="unactive" v-if="!user.active">(Desactivated)</p>
       </li>
     </ul>
   </section>
@@ -31,8 +31,6 @@
 import Title from '@/components/Title.vue';
 
 const axios = require('axios');
-
-const API_URL = 'http://localhost:5000/';
 
 export default {
   name: 'Administration',
@@ -58,14 +56,14 @@ export default {
   methods: {
     getUsers() {
       axios
-        .get(API_URL, {
+        .get(process.env.VUE_APP_API_URL, {
           headers: { Authorization: `Bearer ${localStorage.token}` },
         })
         .then((result) => {
           if (result.data.user.role !== 'admin') this.$router.push('/dashboard');
           else {
             axios
-              .get(`${API_URL}api/v1/users`, {
+              .get(`${process.env.VUE_APP_API_URL}api/v1/users`, {
                 headers: { Authorization: `Bearer ${localStorage.token}` },
               })
               .then((userList) => {
@@ -88,7 +86,7 @@ export default {
     desactivateUser(user) {
       axios
         .patch(
-          `${API_URL}api/v1/users/${user._id}`,
+          `${process.env.VUE_APP_API_URL}api/v1/users/${user._id}`,
           {
             active: !user.active,
           },

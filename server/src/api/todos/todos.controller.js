@@ -1,12 +1,8 @@
-const Joi = require('joi');
-
 const db = require('../../db/connect');
 
 const todos = db.get('todos');
 
-const todoSchema = Joi.object({
-  title: Joi.string().trim().max(100).required(),
-});
+const todoSchema = require('./todos.schema');
 
 const getList = (req, res) => {
   todos.find({ user_id: req.user._id }).then((todoList) => {
@@ -34,7 +30,7 @@ const createTodo = (req, res, next) => {
 };
 
 const deleteTodo = (req, res) => {
-  todos.findOneAndDelete({ _id: req.params.id }).then((result) => {
+  todos.findOneAndDelete({ _id: req.params.id }).then(() => {
     getList(req, res);
   });
 };

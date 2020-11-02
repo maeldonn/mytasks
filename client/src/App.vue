@@ -12,8 +12,6 @@ import Footer from '@/components/Footer.vue';
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/';
-
 export default {
   name: 'App',
   components: {
@@ -37,7 +35,7 @@ export default {
   methods: {
     isConnected() {
       axios
-        .get(API_URL, {
+        .get(process.env.VUE_APP_API_URL, {
           headers: { Authorization: `Bearer ${localStorage.token}` },
         })
         .then((result) => {

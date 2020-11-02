@@ -12,6 +12,7 @@
           type="text"
           id="new-todo"
           autocomplete="off"
+          maxlength="100"
           required
         />
         <label for="new-todo" class="label">
@@ -29,14 +30,12 @@
 </template>
 
 <script>
-import Title from '@/components/Title.vue';
+import Title from "@/components/Title.vue";
 
-const axios = require('axios');
-
-const API_URL = 'http://localhost:5000/';
+const axios = require("axios");
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
     Title,
   },
@@ -44,11 +43,11 @@ export default {
     isLoading: true,
     user: null,
     todos: [],
-    newTodo: '',
+    newTodo: "",
   }),
   mounted() {
     axios
-      .get(API_URL, {
+      .get(process.env.VUE_APP_API_URL, {
         headers: { Authorization: `Bearer ${localStorage.token}` },
       })
       .then((result) => {
@@ -59,34 +58,33 @@ export default {
         }, 200);
       })
       .catch(() => {
-        localStorage.removeItem('token');
-        this.$router.push('/login');
+        localStorage.removeItem("token");
+        this.$router.push("/login");
       });
   },
   methods: {
     addTodo() {
       axios
         .post(
-          `${API_URL}api/v1/todos`,
+          `${process.env.VUE_APP_API_URL}api/v1/todos`,
           {
             title: this.newTodo,
           },
           {
             headers: {
-              'content-type': 'application/json',
+              "content-type": "application/json",
               Authorization: `Bearer ${localStorage.token}`,
             },
-          },
+          }
         )
         .then((result) => {
           this.todos.push(result.data);
-          this.newTodo = '';
-          this.showForm = false;
+          this.newTodo = "";
         });
     },
     getTodos() {
       axios
-        .get(`${API_URL}api/v1/todos`, {
+        .get(`${process.env.VUE_APP_API_URL}api/v1/todos`, {
           headers: {
             Authorization: `Bearer ${localStorage.token}`,
           },
@@ -97,7 +95,7 @@ export default {
     },
     deleteTodo(_id) {
       axios
-        .delete(`${API_URL}api/v1/todos/${_id}`, {
+        .delete(`${process.env.VUE_APP_API_URL}api/v1/todos/${_id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.token}`,
           },
@@ -220,8 +218,8 @@ ul {
 li {
   margin: 0.5em 1em;
   cursor: pointer;
-  width: 50%;
-  padding: 15px 20px;
+  width: 60%;
+  padding: 15px 0em;
   background-color: #293156;
   border: #dea90f 3px solid;
   border-radius: 20px;
