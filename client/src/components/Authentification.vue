@@ -13,6 +13,7 @@
           v-model="user.email"
           type="text"
           id="email"
+          ref="email"
           autocomplete="off"
           required
         />
@@ -50,6 +51,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Joi from 'joi';
 import axios from 'axios';
 
@@ -208,7 +210,9 @@ export default {
       if (this.type === 'Login') {
         this.isLoading = false;
       }
-      document.querySelector('#email').focus(); // TODO: Return null
+      Vue.nextTick(() => {
+        this.$refs.email.focus();
+      });
     },
   },
 };
