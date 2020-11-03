@@ -48,6 +48,10 @@ export default {
   text-align: center;
 }
 
+.description {
+  height: 50%;
+}
+
 h2 {
   font-size: 72px;
   margin: 1em auto;
@@ -68,6 +72,7 @@ h3 {
 }
 
 .buttons {
+  height: 45%;
   display: flex;
   justify-content: center;
 }
@@ -92,5 +97,36 @@ button {
 button:hover {
   background: #ffffff;
   color: #dea90f;
+}
+
+@media screen and (max-width: 1000px) {
+  h2 {
+    margin: 0em auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h2 {
+    margin: 0em auto;
+  }
+
+  .buttons {
+    flex-direction: column;
+    margin-top: 1em;
+  }
+
+  button {
+    margin: 1em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  h2 {
+    font-size: 50px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
 }
 </style>

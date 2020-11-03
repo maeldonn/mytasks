@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import Title from "@/components/Title.vue";
+import Title from '@/components/Title.vue';
 
-const axios = require("axios");
+const axios = require('axios');
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: {
     Title,
   },
@@ -43,7 +43,7 @@ export default {
     isLoading: true,
     user: null,
     todos: [],
-    newTodo: "",
+    newTodo: '',
   }),
   mounted() {
     axios
@@ -58,8 +58,8 @@ export default {
         }, 200);
       })
       .catch(() => {
-        localStorage.removeItem("token");
-        this.$router.push("/login");
+        localStorage.removeItem('token');
+        this.$router.push('/login');
       });
   },
   methods: {
@@ -72,14 +72,14 @@ export default {
           },
           {
             headers: {
-              "content-type": "application/json",
+              'content-type': 'application/json',
               Authorization: `Bearer ${localStorage.token}`,
             },
-          }
+          },
         )
         .then((result) => {
           this.todos.push(result.data);
-          this.newTodo = "";
+          this.newTodo = '';
         });
     },
     getTodos() {
@@ -122,6 +122,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+h1 {
+  text-align: center;
+  /* TODO: Prevent too long email */
 }
 
 form {
@@ -218,13 +223,24 @@ ul {
 li {
   margin: 0.5em 1em;
   cursor: pointer;
-  width: 60%;
-  padding: 15px 0em;
+  width: 50%;
+  padding: 15px;
   background-color: #293156;
   border: #dea90f 3px solid;
   border-radius: 20px;
   color: #ffffff;
   font-size: 1.3em;
   text-align: center;
+  /* TODO: OVERFLOW FOR EMAIL TOO LONG */
+}
+
+@media screen and (max-width: 800px) {
+  form {
+    margin: 1em;
+  }
+
+  button {
+    margin: 0;
+  }
 }
 </style>

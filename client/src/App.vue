@@ -66,11 +66,13 @@ export default {
 body {
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
 }
 
 #app {
   height: 100%;
   font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 </style>

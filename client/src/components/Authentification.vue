@@ -252,6 +252,7 @@ export default {
 
 form {
   width: 100%;
+  height: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -333,5 +334,15 @@ button {
 button:hover {
   background: #ffffff;
   color: #dea90f;
+}
+
+@media screen and (max-height: 800px) {
+  form {
+    margin: 1em;
+  }
+
+  button {
+    margin: 1em;
+  }
 }
 </style>

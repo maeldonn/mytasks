@@ -201,7 +201,7 @@ ul {
 li {
   margin: 0.5em 1em;
   cursor: pointer;
-  width: 50%;
+  width: 70%;
   padding: 15px 20px;
   background-color: #293156;
   border: #dea90f 3px solid;
@@ -209,9 +209,16 @@ li {
   color: #ffffff;
   font-size: 1.3em;
   text-align: center;
+  /* TODO: OVERFLOW FOR EMAIL TOO LONG */
 }
 
 .unactive {
-  color: #7a7a7a;
+  color: #7a7a7a;;
+}
+
+@media screen and (max-width: 800px) {
+  form {
+    margin: 1em;
+  }
 }
 </style>

@@ -12,20 +12,14 @@
 
 # Functionality
 
+* [ ] HTTPonly cookie
 * [ ] Refresh tokens
 * [ ] Add username
 * [ ] Add password complexity
-* [ ] Prevent brute force logins
-  * [ ] Lock out account after too many login attempts
+* [ ] Lock out account after too many login attempts
 
 # Client
 
-* [ ] HTTPonly cookie
-* [ ] Responsive 
-* [ ] Component Dashboard et admin
 * [ ] Login again at every action
-* [ ] Token expired case
-* [ ] Focus last element todos
 * [ ] Check if tried to many times
-* [ ] Check if cookie not valid
 * [ ] Todos
