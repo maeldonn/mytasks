@@ -10,17 +10,17 @@ const defaultLoginError = 'Unable to login';
 // POST /auth/register
 router.post(
   '/register',
-  middlewares.speedLimiter(10, 7, 1),
-  middlewares.rateLimiter(10, 15),
+  middlewares.speedLimiter(10, 5, 1),
   middlewares.validateUser(),
   middlewares.findUser('Email address is already in use', (user) => !user, 409),
+  middlewares.rateLimiter(10, 3),
   controller.register,
 );
 
 // POST /auth/login
 router.post(
   '/login',
-  middlewares.speedLimiter(10, 3, 1),
+  middlewares.speedLimiter(10, 5, 1),
   middlewares.rateLimiter(10, 30),
   middlewares.validateUser(defaultLoginError),
   middlewares.findUser(defaultLoginError, (user) => (user && user.active)),

@@ -126,8 +126,11 @@ export default {
             }, 1000);
           })
           .catch((error) => {
-            setTimeout(() => {
+            if (error.response.status === 429) {
               this.isLoading = false;
+              this.$router.push('/');
+            }
+            setTimeout(() => {
               this.authentificationFailed(error.response.data.message);
             }, 1000);
           });
@@ -156,7 +159,11 @@ export default {
               this.$router.push('/dashboard');
             }, 1000);
           })
-          .catch(() => {
+          .catch((error) => {
+            if (error.response.status === 429) {
+              this.isLoading = false;
+              this.$router.push('/');
+            }
             setTimeout(() => {
               this.authentificationFailed();
             }, 1000);
@@ -207,9 +214,7 @@ export default {
       setTimeout(() => {
         this.errorMessage = errorMessage;
       }, 10);
-      if (this.type === 'Login') {
-        this.isLoading = false;
-      }
+      this.isLoading = false;
       Vue.nextTick(() => {
         this.$refs.email.focus();
       });

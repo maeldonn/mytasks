@@ -21,5 +21,6 @@
 # Client
 
 * [ ] Login again at every action
-* [ ] Check if tried to many times
-* [ ] Todos
+* [ ] Write READMEs
+
+erreurs console

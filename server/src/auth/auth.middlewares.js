@@ -34,7 +34,7 @@ const rateLimiter = (windowMs, max) => rateLimit({
 });
 
 const speedLimiter = (windowMs, delayAfter, delayMs) => slowDown({
-  windowMs: 60 * 1000,
+  windowMs: windowMs * 60 * 1000,
   delayAfter,
   delayMs: delayMs * 1000,
 });
