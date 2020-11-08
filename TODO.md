@@ -17,7 +17,3 @@
 * [ ] Add username
 * [ ] Add password complexity
 * [ ] Lock out account after too many login attempts
-
-# Client
-
-* [ ] Write READMEs
