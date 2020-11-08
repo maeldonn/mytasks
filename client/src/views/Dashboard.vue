@@ -57,9 +57,8 @@ export default {
           this.isLoading = false;
         }, 200);
       })
-      .catch(() => {
-        localStorage.removeItem('token');
-        this.$router.push('/login');
+      .catch((error) => {
+        this.unauthorized(error);
       });
   },
   methods: {
@@ -80,6 +79,9 @@ export default {
         .then((result) => {
           this.todos.push(result.data);
           this.newTodo = '';
+        })
+        .catch((error) => {
+          this.unauthorized(error);
         });
     },
     getTodos() {
@@ -91,6 +93,9 @@ export default {
         })
         .then((result) => {
           this.todos = result.data;
+        })
+        .catch((error) => {
+          this.unauthorized(error);
         });
     },
     deleteTodo(_id) {
@@ -102,7 +107,16 @@ export default {
         })
         .then((result) => {
           this.todos = result.data;
+        })
+        .catch((error) => {
+          this.unauthorized(error);
         });
+    },
+    unauthorized(error) {
+      if (error.response.status === 401) {
+        localStorage.removeItem('token');
+        this.$router.push('/login');
+      }
     },
   },
 };

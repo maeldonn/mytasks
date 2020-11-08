@@ -78,9 +78,8 @@ export default {
               });
           }
         })
-        .catch(() => {
-          localStorage.removeItem('token');
-          this.$router.push('/login');
+        .catch((error) => {
+          this.unauthorized(error);
         });
     },
     desactivateUser(user) {
@@ -99,10 +98,18 @@ export default {
         )
         .then(() => {
           this.getUsers();
+        })
+        .catch((error) => {
+          this.unauthorized(error);
         });
     },
     filterUsers(filter) {
       this.filteredUsers = this.users.filter((user) => user.email.includes(filter));
+    },
+    unauthorized(error) {
+      if (error.response.status === 401) {
+        this.$router.push('/dashboard');
+      }
     },
   },
 };

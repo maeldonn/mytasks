@@ -20,7 +20,5 @@
 
 # Client
 
-* [ ] Login again at every action
 * [ ] Write READMEs
-
-erreurs console
+* [ ] Log errors
