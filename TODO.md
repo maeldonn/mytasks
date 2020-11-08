@@ -21,4 +21,3 @@
 # Client
 
 * [ ] Write READMEs
-* [ ] Log errors

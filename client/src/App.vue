@@ -30,27 +30,32 @@ export default {
     },
   },
   mounted() {
-    this.connected = this.isConnected();
+    this.isConnected();
   },
   methods: {
     isConnected() {
-      axios
-        .get(process.env.VUE_APP_API_URL, {
-          headers: { Authorization: `Bearer ${localStorage.token}` },
-        })
-        .then((result) => {
-          if (result.data.user.role === 'admin') {
-            this.isAdmin = true;
-          } else {
+      if (localStorage.token) {
+        axios
+          .get(process.env.VUE_APP_API_URL, {
+            headers: { Authorization: `Bearer ${localStorage.token}` },
+          })
+          .then((result) => {
+            if (result.data.user.role === 'admin') {
+              this.isAdmin = true;
+            } else {
+              this.isAdmin = false;
+            }
+            this.connected = true;
+          })
+          .catch(() => {
+            this.connected = false;
             this.isAdmin = false;
-          }
-          this.connected = true;
-        })
-        .catch(() => {
-          this.connected = false;
-          this.isAdmin = false;
-          localStorage.removeItem('token');
-        });
+            localStorage.removeItem('token');
+          });
+      } else {
+        this.connected = false;
+        this.isAdmin = false;
+      }
     },
   },
 };
